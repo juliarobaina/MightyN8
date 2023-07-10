@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour
     protected float targetDistance;
     protected Rigidbody2D rb2d;
     protected SpriteRenderer sprite;
+    private GUIStyle guiStyle = new GUIStyle();
+    public Transform leftCounter;
+    public Transform rightCounter;
     
     void Awake()
     {
@@ -59,4 +62,6 @@ public class Enemy : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         sprite.color = Color.white;
     }
+
+    
 }
