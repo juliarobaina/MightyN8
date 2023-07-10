@@ -48,6 +48,6 @@ public class Enemy : MonoBehaviour
     IEnumerator HitedCoRoutine(){
         sprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
-        sprite.color = Color.white
+        sprite.color = Color.white;
     }
 }
