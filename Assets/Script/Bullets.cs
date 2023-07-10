@@ -19,9 +19,13 @@ public class Bullets : MonoBehaviour
         transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        UnityEngine.Debug.Log("detect");
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        if (enemy != null)
+        {
+            enemy.Hited(damage);
+        }
         Destroy(gameObject);
     }
 }

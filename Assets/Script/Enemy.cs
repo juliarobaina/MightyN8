@@ -36,17 +36,26 @@ public class Enemy : MonoBehaviour
         if(operation == 0){
             valueLeft += damage;
             if(valueLeft > valueRight){
-                Instantiate(deathAnimation, transform.position, transform.rotation);
+                // Instantiate(deathAnimation, transform.position, transform.rotation);
 
                 gameObject.SetActive(false);
             } else{
+                StartCoroutine(HitedCoRoutine());
+            }
+        } else if(operation == 1){
+            valueLeft += damage;
+            if(valueLeft < valueRight){
+                // Instantiate(deathAnimation, transform.position, transform.rotation);
+                gameObject.SetActive(false);
+            }else{
                 StartCoroutine(HitedCoRoutine());
             }
         }
     }
 
     IEnumerator HitedCoRoutine(){
-        sprite.color = Color.red;
+        UnityEngine.Debug.Log("test");
+        sprite.color = Color.green;
         yield return new WaitForSeconds(0.1f);
         sprite.color = Color.white;
     }
