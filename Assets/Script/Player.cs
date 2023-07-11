@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     {
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
         transform.position += movement * Time.deltaTime * Speed;
-        camera.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - 1);
+        camera.transform.position = new Vector3(transform.position.x, transform.position.y+4, transform.position.z - 1);
         if(Input.GetAxis("Horizontal") > 0f){
             // anim.SetBool("walk", true);
             transform.eulerAngles = new Vector3(0f,0f,0f);

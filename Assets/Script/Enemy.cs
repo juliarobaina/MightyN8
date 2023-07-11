@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,8 +18,12 @@ public class Enemy : MonoBehaviour
     protected Rigidbody2D rb2d;
     protected SpriteRenderer sprite;
     private GUIStyle guiStyle = new GUIStyle();
-    public Transform leftCounter;
-    public Transform rightCounter;
+    public Transform leftCounterTransform;
+    public Transform rightCounterTransform;
+    public Vector3 offset;
+    public Vector3 offset2;
+    private TextMeshProUGUI leftCounterText;
+    private TextMeshProUGUI rightCounterText;
     
     void Awake()
     {
@@ -26,12 +31,22 @@ public class Enemy : MonoBehaviour
         target = FindObjectOfType<Player>().transform;
         rb2d = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+
+        leftCounterText = leftCounterTransform.GetComponentInChildren<TextMeshProUGUI>();
+        rightCounterText = rightCounterTransform.GetComponentInChildren<TextMeshProUGUI>();
+        UnityEngine.Debug.Log(leftCounterText);
+
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
         targetDistance = transform.position.x - target.position.x;
+        leftCounterTransform.position = transform.position + offset;
+        rightCounterTransform.position = transform.position + offset2;
+        leftCounterText.text = valueLeft.ToString();
+        rightCounterText.text = valueRight.ToString();
+
     }
     
     public void Hited(int damage){
@@ -57,11 +72,9 @@ public class Enemy : MonoBehaviour
     }
 
     IEnumerator HitedCoRoutine(){
-        UnityEngine.Debug.Log("test");
         sprite.color = Color.green;
         yield return new WaitForSeconds(0.1f);
         sprite.color = Color.white;
     }
 
-    
 }
