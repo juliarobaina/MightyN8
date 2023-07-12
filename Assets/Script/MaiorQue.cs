@@ -15,7 +15,7 @@ public class MaiorQue : Enemy
     {
         base.Update();
         if(targetDistance < attackDistance){
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z), speed * Time.deltaTime);
         }
     }
 }

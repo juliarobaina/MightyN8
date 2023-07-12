@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
 
     public GameObject bulletPlusPrefab;
     public GameObject bulletMinusPrefab;
+    public int health = 3;
+    public int plusBullets;
+    public int minusBullets;
     public float fireRate = 50;
     public float nextFire = 0;
     public Transform shotSpawnerUp;
@@ -34,13 +37,19 @@ public class Player : MonoBehaviour
         Move();
         Jump();
         Shot();
+        if(health <= 0){
+            gameObject.SetActive(false);
+        }
     }
 
     void Move()
     {
         Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0f, 0f);
         transform.position += movement * Time.deltaTime * Speed;
-        camera.transform.position = new Vector3(transform.position.x, transform.position.y+4, transform.position.z - 1);
+        if(transform.position.y < -20){
+            health = 0;
+        }
+        camera.transform.position = new Vector3(transform.position.x, transform.position.y+2, transform.position.z - 1);
         if(Input.GetAxis("Horizontal") > 0f){
             // anim.SetBool("walk", true);
             transform.eulerAngles = new Vector3(0f,0f,0f);
@@ -72,23 +81,41 @@ public class Player : MonoBehaviour
             UnityEngine.Debug.Log("enter");
             // anim.SetBool("jump", false);
         }
+        if(collision.gameObject.layer == 9){
+            health--;
+        }
     }
 
     void OnCollisionExit2D(Collision2D collision){
         if(collision.gameObject.layer == 3){
             isJumping = true;
-            UnityEngine.Debug.Log("exit");
+        }
+        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        UnityEngine.Debug.Log("test");
+        FloorBlock fb = collision.gameObject.GetComponent<FloorBlock>();
+        if(fb != null){
+            fb.Trampled();
         }
     }
 
     void Shot(){
-        if(Input.GetButton("Fire1") && nextFire < Time.time){
-            nextFire = Time.time + fireRate;
-            GameObject tempBullet = Instantiate(bulletPlusPrefab, shotSpawnerUp.position, shotSpawnerUp.rotation);
+        if(plusBullets > 0){
+            if(Input.GetButton("Fire1") && nextFire < Time.time){
+                plusBullets--;
+                nextFire = Time.time + fireRate;
+                GameObject tempBullet = Instantiate(bulletPlusPrefab, shotSpawnerUp.position, shotSpawnerUp.rotation);
+            }
         }
-        if(Input.GetButton("Fire2") && nextFire < Time.time){
-            nextFire = Time.time + fireRate;
-            GameObject tempBullet = Instantiate(bulletMinusPrefab, shotSpawnerDown.position, shotSpawnerDown.rotation);
+        if(minusBullets > 0){
+            if(Input.GetButton("Fire2") && nextFire < Time.time){
+                minusBullets--;
+                nextFire = Time.time + fireRate;
+                GameObject tempBullet = Instantiate(bulletMinusPrefab, shotSpawnerDown.position, shotSpawnerDown.rotation);
+            }
         }
     }
 }

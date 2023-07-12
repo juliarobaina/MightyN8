@@ -22,9 +22,12 @@ public class Bullets : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        DestructBlock block = collision.gameObject.GetComponent<DestructBlock>();
         if (enemy != null)
         {
             enemy.Hited(damage);
+        } else if(block != null){
+            block.Hited(damage);
         }
         Destroy(gameObject);
     }

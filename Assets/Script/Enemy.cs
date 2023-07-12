@@ -22,8 +22,8 @@ public class Enemy : MonoBehaviour
     public Transform rightCounterTransform;
     public Vector3 offset;
     public Vector3 offset2;
-    private TextMeshProUGUI leftCounterText;
-    private TextMeshProUGUI rightCounterText;
+    protected TextMeshProUGUI leftCounterText;
+    protected TextMeshProUGUI rightCounterText;
     
     void Awake()
     {
@@ -34,7 +34,6 @@ public class Enemy : MonoBehaviour
 
         leftCounterText = leftCounterTransform.GetComponentInChildren<TextMeshProUGUI>();
         rightCounterText = rightCounterTransform.GetComponentInChildren<TextMeshProUGUI>();
-        UnityEngine.Debug.Log(leftCounterText);
 
     }
 
@@ -72,7 +71,7 @@ public class Enemy : MonoBehaviour
     }
 
     IEnumerator HitedCoRoutine(){
-        sprite.color = Color.green;
+        sprite.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         sprite.color = Color.white;
     }
